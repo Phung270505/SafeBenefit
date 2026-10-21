@@ -1,0 +1,208 @@
+{
+  "schema_version": 5,
+  "study_id": "SAFEBENEFIT-DGQ",
+  "title_en": "SafeBenefit: Benefit-Aware Transfer Plan Adaptation for Dynamic Distributed Graph Queries",
+  "status": "REGISTERED_SIMULATION_ONLY",
+  "master_seed": 42,
+  "primary_objective": "total_wire_bytes",
+  "objective_components": [
+    "payload_bytes",
+    "control_bytes",
+    "retry_bytes",
+    "switch_bytes"
+  ],
+  "focal_method": "SAFE_BENEFIT",
+  "active_methods": [
+    "STATIC",
+    "SWITCH_COST_THRESHOLD",
+    "LINUCB",
+    "SAFE_BENEFIT"
+  ],
+  "comparators": [
+    "STATIC",
+    "SWITCH_COST_THRESHOLD",
+    "LINUCB"
+  ],
+  "method_families": {
+    "STATIC": "non-adaptive baseline",
+    "SWITCH_COST_THRESHOLD": "threshold plus calibrated switching-cost baseline",
+    "LINUCB": "contextual-bandit comparator",
+    "SAFE_BENEFIT": "SafeBenefit focal method"
+  },
+  "historical_aliases": {},
+  "query_classes": [
+    "NEIGHBOR_TYPE_AGG",
+    "TEMPORAL_TYPE_AGG",
+    "TWO_HOP_REACHABILITY",
+    "TWO_HOP_JOIN"
+  ],
+  "plans": {
+    "0": "RAW_ROWS",
+    "1": "LOCAL_REDUCE",
+    "2": "COMPRESSED_REDUCE"
+  },
+  "dataset_scales": [
+    "ldbc_snb_i1_v100_sf01",
+    "ldbc_snb_i1_v100_sf1",
+    "ldbc_snb_i1_v100_sf10"
+  ],
+  "dataset_sources": {
+    "ldbc_snb_i1_v100_sf10": "https://datasets.ldbcouncil.org/snb-interactive-v1/social_network-sf10-CsvBasic-LongDateFormatter.tar.zst"
+  },
+  "graph_checkpoints": {
+    "low": 0.25,
+    "medium": 0.5,
+    "high": 1
+  },
+  "evaluation_design": {
+    "schedules": 8,
+    "replicas": 2,
+    "expected_queries": 576,
+    "expected_clusters": 288,
+    "expected_method_query_runs": 2304,
+    "expected_forced_plan_runs": 1728
+  },
+  "decision": {
+    "benefit_safety_margin": 0.1,
+    "uncertainty_z": 1.96,
+    "prediction_relative_std": 0.05,
+    "switch_budget": 1,
+    "near_completion_guard": 0.9,
+    "maximum_staleness_versions": 0
+  },
+  "switch_cost_model": {
+    "source": "INET PREPARE/ACK Ethernet minimum-frame calibration",
+    "intercept_bytes": 0,
+    "per_worker_bytes": 128,
+    "notes": "one PREPARE and one ACK minimum Ethernet frame per worker"
+  },
+  "rl_training": {
+    "training_seed_stream": "policy_bootstrap",
+    "training_replicas": 3,
+    "ridge_candidates": [
+      0.1,
+      0.01,
+      0.001
+    ],
+    "ucb_alpha": 0.1,
+    "ood_distance": "mahalanobis",
+    "ood_multiplier": 1.5,
+    "minimum_ood_threshold": 4,
+    "exploration_evaluation": 0,
+    "online_updates_evaluation": false,
+    "fallback": "SAFE_BENEFIT"
+  },
+  "cost_model": {
+    "transport": "UDP",
+    "network_header_bytes": 42,
+    "network_mtu_bytes": 1500,
+    "application_chunk_bytes": 900,
+    "simulation_only": true
+  },
+  "reliability": {
+    "retry_interval_seconds": 90,
+    "max_retries": 100
+  },
+  "scalability_evaluation": {
+    "worker_counts": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "schedule_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "distinct_queries": 180,
+    "main_workers": 4,
+    "network_profiles": {
+      "constrained": {
+        "datarate": "100Mbps",
+        "delay": "5ms"
+      },
+      "standard": {
+        "datarate": "1Gbps",
+        "delay": "50us"
+      },
+      "fast": {
+        "datarate": "10Gbps",
+        "delay": "10us"
+      }
+    }
+  },
+  "statistics": {
+    "bootstrap_resamples": 10000,
+    "bootstrap_rng": "PCG64",
+    "cluster_fields": [
+      "dataset_scale",
+      "query_class",
+      "graph_version_bucket",
+      "schedule_id"
+    ],
+    "holm_comparisons": 3,
+    "practical_equivalence_fraction": 0.0025
+  },
+  "experiment_contract": {
+    "new_evaluation_workload_required": true,
+    "same_initial_plan_for_all_methods": true,
+    "initial_plan_selected_from_calibration_only": true,
+    "require_all_plan_winners_in_calibration": false,
+    "evaluation_generated_once": false,
+    "external_datasets_ready": true,
+    "main_ready": true,
+    "simulation_only": true,
+    "rank_reversal_policy": "diagnostic_only"
+  },
+  "per_dataset_design": {
+    "calibration_queries": 96,
+    "evaluation_queries": 192,
+    "clusters": 96,
+    "main_executions": 768,
+    "forced_plan_executions": 576,
+    "scalability_queries": 60
+  },
+  "calibration_design": {
+    "schedules": 4,
+    "replicas": 2,
+    "expected_queries": 288
+  },
+  "reference_model": {
+    "schema_version": 1,
+    "model_id": "logical-ops-reference-2",
+    "description": "Abstract logical operations, not physical CPU instructions or hardware timing",
+    "cpu_work_units_per_second": 10000000,
+    "io_bytes_per_second": 1000000000,
+    "operation_weights": {
+      "edge_visit": 1,
+      "predicate": 1,
+      "aggregate_update": 1,
+      "join_match": 1,
+      "tuple_visit": 1,
+      "encode_byte": 1,
+      "decode_byte": 1,
+      "merge_update": 1,
+      "arithmetic": 1,
+      "comparison": 1,
+      "special_math": 1,
+      "control_message": 1
+    }
+  },
+  "resource_limits": {
+    "io_buffer_bytes": 67108864,
+    "sqlite_cache_bytes": 268435456,
+    "adjacency_cache_bytes": 67108864,
+    "grouping_memory_bytes": 67108864
+  },
+  "switch_threshold_training": {
+    "minimum_threshold": 0,
+    "maximum_threshold": 0.5,
+    "step": 0.01,
+    "updates_during_evaluation": false,
+    "selection": "minimum calibration-train actual plan bytes plus switch bytes, using the deployed switch-aware rule; ties prefer lower threshold"
+  }
+}

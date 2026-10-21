@@ -1,0 +1,6 @@
+# Observed research environment; no upgrades required for the refactor.
+numpy==2.3.1
+orjson==3.10.18
+matplotlib==3.10.7
+python-docx==1.2.0
+ruff==0.12.5

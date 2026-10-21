@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safebenefit-dgq"
+version = "1.0.0"
+description = "Benefit-aware transfer-plan adaptation for dynamic distributed graph queries"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy==2.3.1",
+    "orjson==3.10.18",
+    "matplotlib==3.10.7",
+    "python-docx==1.2.0",
+]
+
+[project.optional-dependencies]
+research = [
+    "numpy==2.3.1",
+    "orjson==3.10.18",
+    "matplotlib==3.10.7",
+    "python-docx==1.2.0",
+]
+dev = ["ruff==0.12.5"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src", "src.*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["F", "I"]

@@ -1,0 +1,11 @@
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.ned text eol=lf
+*.ini text eol=lf
+*.cc text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.yaml text eol=lf
+*.csv text eol=lf
+*.md text eol=lf

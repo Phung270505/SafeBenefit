@@ -1,0 +1,57 @@
+{
+  "lock_version": 1,
+  "generated_at": "2026-09-21",
+  "platform": {
+    "host_os": "Windows 11 10.0.26200 build 26200",
+    "execution_os": "Ubuntu 26.04 LTS on WSL2 2.5.9.0 via opp_env",
+    "status": "LOCKED_AND_VERIFIED",
+    "wsl_distribution": "OMNeT-opp_env",
+    "wsl_disk": "F:\\WSL\\OMNeT-opp_env\\ext4.vhdx",
+    "default_user": "opp_env"
+  },
+  "components": {
+    "omnetpp": {
+      "version": "6.4.0",
+      "release_date": "2026-05-08",
+      "install_command": "opp_env install omnetpp-6.4.0 inet-4.7.0",
+      "official_url": "https://omnetpp.org/download/",
+      "linux_x86_64_sha256": "2dd2cfbd388e50e843f5713716f065e878df7bb104b69f3435f740b37b21d459",
+      "core_sha256": "db8de41f2503772aa627fbd99901078fd7a9db9942df9f284de40f7704053bbb"
+    },
+    "inet": {
+      "version": "4.7.0",
+      "git_tag": "v4.7.0",
+      "release_commit_short": "dfe270b",
+      "official_url": "https://github.com/inet-framework/inet/releases/tag/v4.7.0",
+      "compatibility": "OMNeT++ 6.4 or later",
+      "source_sha256": "0de338f8de6acafa054627ed879efb49137973316cddbc161f60968faa8e4878"
+    },
+    "opp_env": {
+      "version": "0.36.2.260805",
+      "workspace": "/home/opp_env/default_workspace",
+      "virtual_environment": "/home/opp_env/.venv"
+    },
+    "nix": {
+      "version": "2.35.2",
+      "install_mode": "single-user"
+    },
+    "compiler": {
+      "name": "clang++",
+      "version": "21.1.8",
+      "language_standard": "C++17"
+    }
+  },
+  "runtime_policy": {
+    "batch_ui": "Cmdenv",
+    "debug_ui": "Qtenv",
+    "exact_model_commit_required_for_main": true,
+    "record_opp_env_lock_before_pilot": true,
+    "license_note": "Installed OMNeT++ reports Academic Public License -- NOT FOR COMMERCIAL USE",
+    "verification": {
+      "verified_at": "2026-09-21",
+      "omnetpp_smoke_test": "PASS",
+      "inet_smoke_test": "PASS",
+      "inet_shared_library": "/home/opp_env/default_workspace/inet-4.7.0/src/libINET.so"
+    }
+  }
+}

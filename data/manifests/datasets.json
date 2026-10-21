@@ -1,0 +1,33 @@
+{
+  "schema_version": 4,
+  "study_id": "SAFEBENEFIT-DGQ",
+  "dataset_scales": [
+    "ldbc_snb_i1_v100_sf01",
+    "ldbc_snb_i1_v100_sf1",
+    "ldbc_snb_i1_v100_sf10"
+  ],
+  "datasets": {
+    "ldbc_snb_i1_v100_sf01": {
+      "domain": "controlled_synthetic_social_graph",
+      "scale": "SF0.1",
+      "source": "LDBC SNB Interactive v1 Datagen 1.0.0",
+      "purpose": "development-scale controlled graph"
+    },
+    "ldbc_snb_i1_v100_sf1": {
+      "domain": "controlled_synthetic_social_graph",
+      "scale": "SF1",
+      "source": "LDBC SNB Interactive v1 Datagen 1.0.0",
+      "purpose": "medium-scale comparison"
+    },
+    "ldbc_snb_i1_v100_sf10": {
+      "domain": "controlled_synthetic_social_graph",
+      "scale": "SF10",
+      "source": "LDBC SNB Interactive v1 Datagen 1.0.0",
+      "purpose": "large-scale comparison"
+    }
+  },
+  "raw_root": "data/raw",
+  "processed_root": "data/processed",
+  "integrity_source": "data/processed/<dataset_id>/metadata/manifest.json",
+  "generated_integrity_report": "output/current/config/dataset_integrity.json"
+}
